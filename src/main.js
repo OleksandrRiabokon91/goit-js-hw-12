@@ -14,7 +14,7 @@ const input = form.elements['search-text'];
 
 form.addEventListener('submit', onSearch);
 
-function onSearch(e) {
+async function onSearch(e) {
   e.preventDefault();
 
   const query = input.value.trim();
@@ -31,27 +31,26 @@ function onSearch(e) {
   clearGallery();
   showLoader();
 
-  getImagesByQuery(query)
-    .then(hits => {
-      if (!hits.length) {
-        iziToast.warning({
-          message:
-            'Sorry, there are no images matching your search query. Please try again!',
-          position: 'topRight',
-          timeout: 4000,
-        });
-        return;
-      }
-      createGallery(hits);
-    })
-    .catch(() => {
-      iziToast.error({
-        message: 'Network error. Please try later.',
+  try {
+    const hits = await getImagesByQuery(query);
+
+    if (!hits.length) {
+      iziToast.warning({
+        message:
+          'Sorry, there are no images matching your search query. Please try again!',
         position: 'topRight',
         timeout: 4000,
       });
-    })
-    .finally(() => {
-      hideLoader();
+      return;
+    }
+
+    createGallery(hits);
+  } catch (error) {
+    iziToast.error({
+      message: 'Network error. Please try later.',
+      position: 'topRight',
+      timeout: 4000,
     });
+  }
+  hideLoader();
 }
