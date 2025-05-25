@@ -2,7 +2,9 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const galleryEl = document.querySelector('.gallery');
-const loaderEl = document.getElementById('global-loader');
+const loaderEl = document.querySelector('.loader');
+const loaderBackdrop = document.querySelector('.loader-backdrop');
+export const load_btn = document.querySelector('.js-button-load');
 
 const lightbox = new SimpleLightbox('.gallery a', {
   captions: true,
@@ -45,9 +47,44 @@ export function clearGallery() {
 }
 
 export function showLoader() {
-  loaderEl.classList.add('is-active');
+  loaderEl.classList.remove('hidden');
+  loaderBackdrop.classList.remove('hidden');
 }
 
 export function hideLoader() {
-  loaderEl.classList.remove('is-active');
+  loaderEl.classList.add('hidden');
+  loaderBackdrop.classList.add('hidden');
+}
+
+// ========== fo paginashon
+
+export function checkForLoadMoreButton(currentPage, maxPage) {
+  if (currentPage < maxPage) {
+    showLoadMoreButton();
+  } else {
+    iziToast.info({
+      message: "We're sorry, but you've reached the end of search results.",
+      position: 'topRight',
+      timeout: 3000,
+    });
+    hideLoadMoreButton();
+  }
+}
+function showLoadMoreButton() {
+  load_btn.classList.remove('hidden');
+}
+export function hideLoadMoreButton() {
+  load_btn.classList.add('hidden');
+}
+
+// ========== slow scroll formuls
+
+export function smoothScrollAfterLoad() {
+  const galleryItems = document.querySelectorAll('.gallery li');
+  if (galleryItems.length === 0) return;
+  const firstCardHeight = galleryItems[0].getBoundingClientRect().height;
+  window.scrollBy({
+    top: firstCardHeight * 2,
+    behavior: 'smooth',
+  });
 }
