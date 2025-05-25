@@ -63,7 +63,6 @@ export function checkForLoadMoreButton(currentPage, maxPage) {
   if (currentPage < maxPage) {
     showLoadMoreButton();
   } else {
-    console.log('iziToast is', typeof iziToast);
     iziToast.info({
       message: "We're sorry, but you've reached the end of search results.",
       position: 'topRight',
