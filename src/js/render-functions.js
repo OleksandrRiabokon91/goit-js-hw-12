@@ -1,11 +1,12 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
 const galleryEl = document.querySelector('.gallery');
 const loaderEl = document.querySelector('.loader');
 const loaderBackdrop = document.querySelector('.loader-backdrop');
 export const load_btn = document.querySelector('.js-button-load');
-
 const lightbox = new SimpleLightbox('.gallery a', {
   captions: true,
   captionsData: 'alt',
@@ -62,6 +63,7 @@ export function checkForLoadMoreButton(currentPage, maxPage) {
   if (currentPage < maxPage) {
     showLoadMoreButton();
   } else {
+    console.log('iziToast is', typeof iziToast);
     iziToast.info({
       message: "We're sorry, but you've reached the end of search results.",
       position: 'topRight',
@@ -70,10 +72,13 @@ export function checkForLoadMoreButton(currentPage, maxPage) {
     hideLoadMoreButton();
   }
 }
-function showLoadMoreButton() {
+export function showLoadMoreButton() {
+  if (!load_btn) return;
   load_btn.classList.remove('hidden');
 }
+
 export function hideLoadMoreButton() {
+  if (!load_btn) return;
   load_btn.classList.add('hidden');
 }
 
