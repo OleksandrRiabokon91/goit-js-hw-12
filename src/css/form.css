@@ -41,3 +41,13 @@ input:hover {
 input:active {
   border: 1px solid #808080;
 }
+
+.js-button-load {
+  display: inline;
+  margin: 0 auto;
+  width: 120px;
+}
+
+.hidden {
+  display: none;
+}
