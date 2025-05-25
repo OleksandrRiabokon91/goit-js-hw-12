@@ -66,7 +66,7 @@ async function onSearch(e) {
     console.log('End of try block reached successfully');
   } catch (error) {
     iziToast.error({
-      message: 'Network error. Please try later.1',
+      message: 'Network error. Please try later.',
       position: 'topRight',
       timeout: 4000,
     });
@@ -88,7 +88,7 @@ async function loadMore() {
     checkForLoadMoreButton(page, MAX_PAGE);
   } catch (error) {
     iziToast.error({
-      message: 'Network error. Please try later.2',
+      message: 'Network error. Please try later.',
       position: 'topRight',
       timeout: 4000,
     });
